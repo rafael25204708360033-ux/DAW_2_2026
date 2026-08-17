@@ -1,7 +1,6 @@
 
 <?php
     //planilha para alunos em txt em php
-    // $msg = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
     $nome = $_POST["nome"];
     $email = $_POST["email"];
@@ -16,8 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
        fclose($arqDisc);
    }
    $arqDisc = fopen("alunos.txt","a") or die("erro ao criar arquivo");
- //   $arqDisc = fopen("disciplinas.txt","w") or die("erro ao criar arquivo");
- //   $linha = "nome;sigla;carga\n";
     $linha = $nome . ";" . $email . ";" . $mat . ";" . $cpf . "\n";
     fwrite($arqDisc,$linha);
     fclose($arqDisc);
