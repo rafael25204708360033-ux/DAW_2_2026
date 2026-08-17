@@ -5,22 +5,23 @@
 if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
     $nome = $_POST["nome"];
     $email = $_POST["email"];
-    $carga = $_POST["carga"];
+    $mat = $_POST["matricula"];
+    $cpf = $_POST["cpf"];
     $msg = "";
     echo "nome: " . $nome . " sigla: " . " carga: " . $carga;
-   if (!file_exists("disciplinas.txt")) {
-       $arqDisc = fopen("disciplinas.txt","w") or die("erro ao criar arquivo");
-       $linha = "nome;sigla;carga\n";
+   if (!file_exists("alunos.txt")) {
+       $arqDisc = fopen("alunos.txt","w") or die("erro ao criar arquivo");
+       $linha = "nome;email;matricula;cpf\n";
        fwrite($arqDisc,$linha);
        fclose($arqDisc);
    }
-   $arqDisc = fopen("disciplinas.txt","a") or die("erro ao criar arquivo");
+   $arqDisc = fopen("alunos.txt","a") or die("erro ao criar arquivo");
  //   $arqDisc = fopen("disciplinas.txt","w") or die("erro ao criar arquivo");
  //   $linha = "nome;sigla;carga\n";
-    $linha = $nome . ";" . $sigla . ";" . $carga . "\n";
+    $linha = $nome . ";" . $email . ";" . $mat . ";" . $cpf . "\n";
     fwrite($arqDisc,$linha);
     fclose($arqDisc);
-    $msg = "Deu tudo certo!!!";
+    $msg = "Deu bom!";
 }
 ?>
 <!DOCTYPE html>
@@ -28,15 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
 <head>
 </head>
 <body>
-<h1>Criar Nova Disciplina</h1>
-<form action="ex03_IncluirDisciplina.php" method="POST">
+<h1>Adicionar Novo Aluno</h1>
+<form action="CriarAlunos.php" method="POST">
     Nome: <input type="text" name="nome">
     <br><br>
-    Sigla: <input type="text" name="sigla">
+    Email: <input type="text" name="email">
     <br><br>
-    Carga Horaria: <input type="text" name="carga">
+    Matrícula: <input type="text" name="mat">
     <br><br>
-    <input type="submit" value="Criar Nova Disciplina">
+    CPF: <input type="text" name="cpf">
+    <input type="submit" value="Adicionar Novo Aluno">
 </form>
 <p><?php echo $msg ?></p>
 <br>
