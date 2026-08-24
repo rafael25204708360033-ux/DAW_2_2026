@@ -15,7 +15,6 @@ $v1 = $_GET["a"];
   elseif ($op == "/" || $op == ":"):
        $result = $v1 / $v2;
   
-  endif;
  
 
 ?>
