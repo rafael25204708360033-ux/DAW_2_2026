@@ -2,12 +2,12 @@
     $sigla = "";
     $msg = "";
     $nome = "";
-    $carga = "";
+    $horas = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
     $sigla = $_POST["sigla"];
     $nome = $_POST["nome"];
-    $carga = $_POST["carga"];
+    $horas = $_POST["horas"];
     $msg = "";
     $arqDisc = fopen("disciplinas.txt","r") or die("erro ao abrir arquivo");
     $arqDiscNovo = fopen("disciplinas.txt","w") or die("erro ao abrir arquivo");
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
         $linha = fgets($arqDisc);
         $colunaDados = explode(";", $linha);
         if $colunaDados[1] = $sigla {
-            $linha = '$nome' . '$sigla' . '$carga' . '\n';
+            $linha = '$nome' . '$sigla' . '$horas' . '\n';
         }
         fwrite($arqDisc2,$linha);
      }
