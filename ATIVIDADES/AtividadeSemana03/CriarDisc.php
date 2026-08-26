@@ -1,21 +1,23 @@
 <?php
+$msg = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST["nome"];
     $sigla = $_POST["sigla"];
     $horas = $_POST["horas"];
-    $msg = "";
-    echo "nome: " . $nome . " sigla: " . " horas: " . $horas;
-   if (!file_exists("alunos.txt")) {
-       $arqDisc = fopen("disciplinas.txt","w") or die("erro ao criar arquivo");
-       $linha = "nome;sigla;horas\n";
-       fwrite($arqDisc,$linha);
-       fclose($arqDisc);
-   }
-   $arqDisc = fopen("disciplinas.txt","a") or die("erro ao criar arquivo");
+
+    if (!file_exists("disciplinas.txt")) {
+        $arqDisc = fopen("disciplinas.txt", "w") or die("Erro ao criar arquivo");
+        $linha = "nome;sigla;horas\n";
+        fwrite($arqDisc, $linha);
+        fclose($arqDisc);
+    }
+
+    $arqDisc = fopen("disciplinas.txt", "a") or die("Erro ao abrir arquivo");
     $linha = $nome . ";" . $sigla . ";" . $horas . "\n";
-    fwrite($arqDisc,$linha);
+    fwrite($arqDisc, $linha);
     fclose($arqDisc);
+
     $msg = "Deu bom!";
 }
 ?>
@@ -28,13 +30,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
 <form action="CriarDisc.php" method="POST">
     Nome: <input type="text" name="nome">
     <br><br>
-    Email: <input type="text" name="sigla">
+    Sigla: <input type="text" name="sigla">
     <br><br>
-    Matrícula: <input type="text" name="horas">
+    Horas: <input type="text" name="horas">
     <br><br>
-    <input type="submit" value="Adicionar Novo Aluno">
+    <input type="submit" value="Adicionar Disciplina">
 </form>
-<p><?php echo $msg ?></p>
+<p><?php echo $msg; ?></p>
 <br>
+<ul>
+    <li><a href="ListarDisc.php">Listar Disciplinas</a></li>
+    <li><a href="AlterarDisc.php">Alterar Disciplina</a></li>
+    <li><a href="ExcluirDisc.php">Excluir Disciplina</a></li>
+</ul>
 </body>
 </html>

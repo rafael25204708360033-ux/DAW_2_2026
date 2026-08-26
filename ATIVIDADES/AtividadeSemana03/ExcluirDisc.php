@@ -1,42 +1,51 @@
 <?php
-    $sigla = "";
-    $msg = "";
-    $nome = "";
-    $horas = "";
+$msg = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sigla = $_POST["sigla"];
-    $nome = $_POST["nome"];
-    $horas = $_POST["horas"];
-    $msg = "";
-    $arqDisc = fopen("disciplinas.txt","r") or die("erro ao abrir arquivo");
-    $arqDiscNovo = fopen("disciplinas.txt","w") or die("erro ao abrir arquivo");
-    
-    $linha = fgets($arqDisc);
-    fwrite($arqDisc2,$linha);
 
-    while(!feof($arqDisc)) {
+    $arqDisc = fopen("disciplinas.txt", "r") or die("erro ao abrir arquivo");
+    $arqDiscNovo = fopen("disciplinas_temp.txt", "w") or die("erro ao abrir arquivo");
+
+    $linha = fgets($arqDisc);
+    fwrite($arqDiscNovo, $linha);
+
+    while (!feof($arqDisc)) {
         $linha = fgets($arqDisc);
-        $colunaDados = explode(";", $linha);
-        if $colunaDados[1] = $sigla {
-            $linha = fgets($arqDisc);
+        if ($linha != "") {
+            $colunaDados = explode(";", $linha);
+            if ($colunaDados[1] == $sigla) {
+                continue;
+            }
+            fwrite($arqDiscNovo, $linha);
         }
-        fwrite($arqDisc2,$linha);
-     }
+    }
+
     fclose($arqDisc);
-    fclose($arqDisc2);
-    $msg = "Deu tudo certo!!!";
+    fclose($arqDiscNovo);
+
+    rename("disciplinas_temp.txt", "disciplinas.txt");
+    $msg = "Excluido com sucesso!";
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
 </head>
 <body>
-    
+<h1>Excluir Disciplina</h1>
+<form action="ExcluirDisc.php" method="POST">
+    Sigla da disciplina a excluir: <input type="text" name="sigla">
+    <br><br>
+    <input type="submit" value="Excluir Disciplina">
+</form>
+
+<p><?php echo $msg; ?></p>
+<br>
+<ul>
+    <li><a href="CriarDisc.php">Incluir Disciplina</a></li>
+    <li><a href="ListarDisc.php">Listar Disciplinas</a></li>
+    <li><a href="AlterarDisc.php">Alterar Disciplina</a></li>
+</ul>
 </body>
 </html>
