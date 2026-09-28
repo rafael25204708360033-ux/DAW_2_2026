@@ -3,10 +3,26 @@
 <head>
 </head>
 <body>
-    
-    <h1>Cadastro de Perguntas e Respostas</h1>
-    <href="CriarPerguntas.php">Criar Perguntas</a>
-    <href="CriarRespostas.php">Criar Respostas</a>
+<h1>Adicionar Nova Pergunta</h1>
+<form action="CriarPerguntas.php" method="POST">
+    ID: <input type="text" name="ID">
+    <br><br>
+    Pergunta: <input type="text" name="Pergunta">
+    <br><br>
+    <input type="submit" value="Adicionar Pergunta">
+</form>
+
+<h1>Adicionar Resposta a uma pergunta existente</h1>
+
+<form action="CriarRespostas.php" method="POST">
+    ID da Questão: <input type="text" name="ID">
+    <br><br>
+    Numero da Pergunta: <input type="text" name="IDResposta">
+    <br><br>
+    Resposta: <input type="text" name="Resposta">
+    <br><br>
+    <input type="submit" value="Adicionar Resposta">
+</form>
 
 <br>
 <ul>
