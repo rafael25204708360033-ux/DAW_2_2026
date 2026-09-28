@@ -7,16 +7,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $resposta = $_POST["Resposta"];
 
     if (!file_exists("respostas.txt")) {
-        $arqPerg = fopen("respostas.txt", "w") or die("Erro ao criar arquivo");
+        $arqResp = fopen("respostas.txt", "w") or die("Erro ao criar arquivo");
         $linha = "ID;IDResposta;Resposta\n";
         fwrite($arqResp, $linha);
         fclose($arqResp);
     }
 
-    $arqPerg = fopen("respostas.txt", "a") or die("Erro ao abrir arquivo");
+    $arqResp = fopen("respostas.txt", "a") or die("Erro ao abrir arquivo");
     $linha = $IDPERGUNTA . ";" . $ID . ";" . $resposta . "\n";
-    fwrite($arqPerg, $linha);
-    fclose($arqPerg);
+    fwrite($arqResp, $linha);
+    fclose($arqResp);
 
     $msg = "Deu bom!";
 }
