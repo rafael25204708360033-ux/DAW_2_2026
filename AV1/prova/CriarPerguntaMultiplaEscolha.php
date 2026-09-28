@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 <h1>Adicionar Pergunta e Respostas (Múltipla Escolha)</h1>
 
-<form action="CriarPerguntaME.php" method="POST">
+<form action="CriarPerguntaMultiplaEscolha.php" method="POST">
     ID da Pergunta: <input type="text" name="ID"><br><br>
     Pergunta: <input type="text" name="Pergunta"><br><br>
     
