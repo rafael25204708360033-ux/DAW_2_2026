@@ -49,6 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="submit" value="Adicionar Resposta">
 </form>
 
+    <href="CriarPerguntas.php">Criar Perguntas</a>
+
 <p><?php echo $msg; ?></p>
 <br>
 <ul>
