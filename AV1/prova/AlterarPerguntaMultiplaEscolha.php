@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 <h1>Alterar Pergunta e Respostas (Múltipla Escolha)</h1>
 
-<form action="AlterarPerguntaME.php" method="POST">
+<form action="AlterarPerguntaMultiplaEscolha.php" method="POST">
     ID da Pergunta: <input type="text" name="ID"><br><br>
     Nova Pergunta: <input type="text" name="Pergunta"><br><br>
     
