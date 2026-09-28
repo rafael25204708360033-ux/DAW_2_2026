@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="submit" value="Adicionar Pergunta">
 </form>
 
-    <href="CriarRespostas.php">Criar Respostas</a>
+    <a href="CriarRespostas.php">Criar Respostas</a>
 
 <p><?php echo $msg; ?></p>
 <br>
