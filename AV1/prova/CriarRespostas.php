@@ -28,14 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
 </head>
 <body>
-<h1>Adicionar Nova Pergunta</h1>
-<form action="CriarPerguntas.php" method="POST">
-    ID: <input type="text" name="ID">
-    <br><br>
-    Pergunta: <input type="text" name="Pergunta">
-    <br><br>
-    <input type="submit" value="Adicionar Pergunta">
-</form>
 
 <h1>Adicionar Resposta a uma pergunta existente</h1>
 
