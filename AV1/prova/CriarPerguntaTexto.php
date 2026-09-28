@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 <h1>Adicionar Pergunta e Resposta de Texto</h1>
 
-<form action="CriarPerguntaTXT.php" method="POST">
+<form action="CriarPerguntaTexto.php" method="POST">
     ID da Pergunta: <input type="text" name="ID"><br><br>
     Pergunta: <input type="text" name="Pergunta"><br><br>
     Resposta Esperada: <input type="text" name="Resposta"><br><br>
