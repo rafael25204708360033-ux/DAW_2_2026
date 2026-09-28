@@ -37,17 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="submit" value="Adicionar Pergunta">
 </form>
 
-<h1>Adicionar Resposta a uma pergunta existente</h1>
-
-<form action="CriarRespostas.php" method="POST">
-    ID da Questão: <input type="text" name="ID">
-    <br><br>
-    Numero da Pergunta: <input type="text" name="IDResposta">
-    <br><br>
-    Resposta: <input type="text" name="Resposta">
-    <br><br>
-    <input type="submit" value="Adicionar Resposta">
-</form>
+    <href="CriarRespostas.php">Criar Respostas</a>
 
 <p><?php echo $msg; ?></p>
 <br>
