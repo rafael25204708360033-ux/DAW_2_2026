@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 <h1>Alterar Pergunta de Texto</h1>
 
-<form action="AlterarPerguntaTXT.php" method="POST">
+<form action="AlterarPerguntaTexto.php" method="POST">
     ID da Pergunta: <input type="text" name="ID"><br><br>
     Nova Pergunta: <input type="text" name="Pergunta"><br><br>
     Nova Resposta: <input type="text" name="Resposta"><br><br>
