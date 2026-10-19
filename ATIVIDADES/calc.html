@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+</head>
+<body>
+
+    
+    <form>
+        <input type="number" id="a" placeholder="Primeiro número">
+        <input type="text" id="op" placeholder="Sinal (+, -, *, /)" size="10">
+        <input type="number" id="b" placeholder="Segundo número">
+        <button type="button" onclick="calcular()">Calcular</button>
+    </form>
+
+    
+    <div id="tela-resultado"></div>
+
+    <script>
+        function calcular() {
+            // Pega os valores digitados no formulário
+            let v1 = Number(document.getElementById("a").value);
+            let v2 = Number(document.getElementById("b").value);
+            let op = document.getElementById("op").value;
+            
+            let result = "";
+
+            // Mesma lógica de verificação do seu PHP
+            if (op == "+") {
+                result = v1 + v2;
+            } else if (op == "-") {
+                result = v1 - v2;
+            } else if (op == "x" || op == "*" || op == ".") {
+                result = v1 * v2;
+            } else if (op == "/" || op == ":") {
+                result = v1 / v2;
+            }
+
+            
+            document.getElementById("tela-resultado").innerHTML = "<h1>Resultado: " + result + "</h1>";
+        }
+    </script>
+    
+</body>
+</html>
