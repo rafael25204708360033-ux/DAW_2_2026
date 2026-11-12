@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Perguntas e Respostas</title>
+    <script>
+        function carregarPagina(url) {
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("conteudo").innerHTML = this.responseText;
+                }
+            }
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        }
+
+        function cadastrarUsuario() {
+            let nome = document.getElementById("nome").value;
+            let email = document.getElementById("email").value;
+            let senha = document.getElementById("senha").value;
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                }
+            }
+            xmlhttp.open("GET", "Usuarios.php?nome=" + encodeURIComponent(nome) + "&email=" + encodeURIComponent(email) + "&senha=" + encodeURIComponent(senha), true);
+            xmlhttp.send();
+        }
+
+        function criarPerguntaTexto() {
+            let id = document.getElementById("id_p").value;
+            let pergunta = document.getElementById("pergunta_p").value;
+            let resposta = document.getElementById("resposta_p").value;
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                }
+            }
+            xmlhttp.open("GET", "CriarPerguntaTexto.php?ID=" + encodeURIComponent(id) + "&Pergunta=" + encodeURIComponent(pergunta) + "&Resposta=" + encodeURIComponent(resposta), true);
+            xmlhttp.send();
+        }
+
+        function criarPerguntaMultipla() {
+            let id = document.getElementById("id_m").value;
+            let pergunta = document.getElementById("pergunta_m").value;
+            let r1 = document.getElementById("r1").value;
+            let r2 = document.getElementById("r2").value;
+            let r3 = document.getElementById("r3").value;
+            let r4 = document.getElementById("r4").value;
+
+            let url = "CriarPerguntaMultiplaEscolha.php?ID=" + encodeURIComponent(id) + 
+                      "&Pergunta=" + encodeURIComponent(pergunta) + 
+                      "&resposta_1=" + encodeURIComponent(r1) + 
+                      "&resposta_2=" + encodeURIComponent(r2) + 
+                      "&resposta_3=" + encodeURIComponent(r3) + 
+                      "&resposta_4=" + encodeURIComponent(r4);
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                }
+            }
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        }
+
+        function buscarEspecifica() {
+            let id = document.getElementById("id_busca").value;
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("resultado_busca").innerHTML = this.responseText;
+                }
+            }
+            xmlhttp.open("GET", "ListarPerguntaEspecifica.php?ID=" + encodeURIComponent(id), true);
+            xmlhttp.send();
+        }
+
+        function alterarPerguntaTexto() {
+            let id = document.getElementById("alt_id_p").value;
+            let pergunta = document.getElementById("alt_pergunta_p").value;
+            let resposta = document.getElementById("alt_resposta_p").value;
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                }
+            }
+            xmlhttp.open("GET", "AlterarPerguntaTexto.php?ID=" + encodeURIComponent(id) + "&Pergunta=" + encodeURIComponent(pergunta) + "&Resposta=" + encodeURIComponent(resposta), true);
+            xmlhttp.send();
+        }
+
+        function alterarPerguntaMultipla() {
+            let id = document.getElementById("alt_id_m").value;
+            let pergunta = document.getElementById("alt_pergunta_m").value;
+            let r1 = document.getElementById("alt_r1").value;
+            let r2 = document.getElementById("alt_r2").value;
+            let r3 = document.getElementById("alt_r3").value;
+            let r4 = document.getElementById("alt_r4").value;
+
+            let url = "AlterarPerguntaMultiplaEscolha.php?ID=" + encodeURIComponent(id) + 
+                      "&Pergunta=" + encodeURIComponent(pergunta) + 
+                      "&resposta_1=" + encodeURIComponent(r1) + 
+                      "&resposta_2=" + encodeURIComponent(r2) + 
+                      "&resposta_3=" + encodeURIComponent(r3) + 
+                      "&resposta_4=" + encodeURIComponent(r4);
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                }
+            }
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        }
+
+        function excluirPergunta() {
+            let id = document.getElementById("exc_id").value;
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                }
+            }
+            xmlhttp.open("GET", "ExcluirPergunta.php?ID=" + encodeURIComponent(id), true);
+            xmlhttp.send();
+        }
+    </script>
+</head>
+<body>
+    <h1>Painel de Gestão do Sistema</h1>
+
+    <button onclick="carregarFormUsuario()">Cadastrar Usuário</button>
+    <button onclick="carregarFormTexto()">Criar Pergunta (Texto)</button>
+    <button onclick="carregarFormMultipla()">Criar Pergunta (Múltipla)</button>
+    <button onclick="carregarPagina('ListarPerguntas.php')">Listar Todas</button>
+    <button onclick="carregarFormBusca()">Buscar por ID</button>
+    <button onclick="carregarFormAltTexto()">Alterar Texto</button>
+    <button onclick="carregarFormAltMultipla()">Alterar Múltipla</button>
+    <button onclick="carregarFormExcluir()">Excluir Pergunta</button>
+
+    <hr>
+    <div id="conteudo"></div>
+    <div id="msg"></div>
+
+    <script>
+        function carregarFormUsuario() {
+            document.getElementById("msg").innerHTML = "";
+            document.getElementById("conteudo").innerHTML = `
+                <h2>Cadastrar Usuário</h2>
+                Nome: <input type="text" id="nome"><br><br>
+                Email: <input type="text" id="email"><br><br>
+                Senha: <input type="password" id="senha"><br><br>
+                <input type="button" value="Cadastrar" onclick="cadastrarUsuario()">
+            `;
+        }
+
+        function carregarFormTexto() {
+            document.getElementById("msg").innerHTML = "";
+            document.getElementById("conteudo").innerHTML = `
+                <h2>Criar Pergunta de Texto</h2>
+                ID: <input type="text" id="id_p"><br><br>
+                Pergunta: <input type="text" id="pergunta_p"><br><br>
+                Resposta Esperada: <input type="text" id="resposta_p"><br><br>
+                <input type="button" value="Salvar" onclick="criarPerguntaTexto()">
+            `;
+        }
+
+        function carregarFormMultipla() {
+            document.getElementById("msg").innerHTML = "";
+            document.getElementById("conteudo").innerHTML = `
+                <h2>Criar Pergunta de Múltipla Escolha</h2>
+                ID: <input type="text" id="id_m"><br><br>
+                Pergunta: <input type="text" id="pergunta_m"><br><br>
+                Resposta 1: <input type="text" id="r1"><br><br>
+                Resposta 2: <input type="text" id="r2"><br><br>
+                Resposta 3: <input type="text" id="r3"><br><br>
+                Resposta 4: <input type="text" id="r4"><br><br>
+                <input type="button" value="Salvar Tudo" onclick="criarPerguntaMultipla()">
+            `;
+        }
+
+        function carregarFormBusca() {
+            document.getElementById("msg").innerHTML = "";
+            document.getElementById("conteudo").innerHTML = `
+                <h2>Buscar Pergunta por ID</h2>
+                ID da Pergunta: <input type="text" id="id_busca">
+                <input type="button" value="Buscar" onclick="buscarEspecifica()">
+                <br><br>
+                <div id="resultado_busca"></div>
+            `;
+        }
+
+        function carregarFormAltTexto() {
+            document.getElementById("msg").innerHTML = "";
+            document.getElementById("conteudo").innerHTML = `
+                <h2>Alterar Pergunta de Texto</h2>
+                ID da Pergunta: <input type="text" id="alt_id_p"><br><br>
+                Nova Pergunta: <input type="text" id="alt_pergunta_p"><br><br>
+                Nova Resposta: <input type="text" id="alt_resposta_p"><br><br>
+                <input type="button" value="Alterar" onclick="alterarPerguntaTexto()">
+            `;
+        }
+
+        function carregarFormAltMultipla() {
+            document.getElementById("msg").innerHTML = "";
+            document.getElementById("conteudo").innerHTML = `
+                <h2>Alterar Pergunta de Múltipla Escolha</h2>
+                ID da Pergunta: <input type="text" id="alt_id_m"><br><br>
+                Nova Pergunta: <input type="text" id="alt_pergunta_m"><br><br>
+                Nova Resposta 1: <input type="text" id="alt_r1"><br><br>
+                Nova Resposta 2: <input type="text" id="alt_r2"><br><br>
+                Nova Resposta 3: <input type="text" id="alt_r3"><br><br>
+                Nova Resposta 4: <input type="text" id="alt_r4"><br><br>
+                <input type="button" value="Alterar Tudo" onclick="alterarPerguntaMultipla()">
+            `;
+        }
+
+        function carregarFormExcluir() {
+            document.getElementById("msg").innerHTML = "";
+            document.getElementById("conteudo").innerHTML = `
+                <h2>Excluir Pergunta</h2>
+                ID da Pergunta a excluir: <input type="text" id="exc_id"><br><br>
+                <input type="button" value="Excluir" onclick="excluirPergunta()">
+            `;
+        }
+    </script>
+</body>
+</html>

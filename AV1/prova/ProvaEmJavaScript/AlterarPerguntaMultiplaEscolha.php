@@ -1,34 +1,53 @@
 <?php
-// ============================================================================
-// ETAPA 1: RECEBIMENTO DOS PARÂMETROS VIA GET
-// ============================================================================
-// 1. Recebe o ID da pergunta e o novo enunciado.
-// 2. As respostas atualizadas virão nos parâmetros GET dinamizados ("resposta_1", "resposta_2", etc).
+$ID = $_GET["ID"];
+$novaPergunta = $_GET["Pergunta"];
 
-// ============================================================================
-// ETAPA 2: ATUALIZAÇÃO DO ENUNCIADO (perguntas.txt)
-// ============================================================================
-// 1. Abre "perguntas.txt" ("r") e "perguntas_temp.txt" ("w").
-// 2. Loop feof(): lê linha por linha.
-// 3. Se o ID bater com o ID procurado, substitui a linha pela nova pergunta.
-// 4. Copia as demais linhas normalmente para o temporário.
-// 5. Fecha os arquivos, apaga "perguntas.txt" e renomeia o temporário.
+if (file_exists("perguntas.txt")) {
+    $arqAntigo = fopen("perguntas.txt", "r");
+    $arqNovo = fopen("perguntas_temp.txt", "w");
 
-// ============================================================================
-// ETAPA 3: ATUALIZAÇÃO DAS 4 RESPOSTAS (respostas.txt)
-// ============================================================================
-// 1. Abre "respostas.txt" ("r") e "respostas_temp.txt" ("w").
-// 2. Loop feof() lendo linha por linha com fgets() e explode(";").
-// 3. Captura o ID da pergunta ($dados[0]) e o número da alternativa/IDResposta ($dados[1]).
-// 4. Se o ID da pergunta bater com o ID buscado:
-//    - Monta dinamicamente a chave do campo: "resposta_" . $IDRespostaArquivo
-//    - Pega o novo valor recebido via GET: $_GET[$nomeCampo]
-//    - Atualiza a linha com: $ID . ";" . $IDRespostaArquivo . ";" . $novaRespTexto . "\n"
-// 5. Escreve a linha (alterada ou original) no arquivo temporário.
-// 6. Fecha, apaga "respostas.txt" e renomeia "respostas_temp.txt".
+    while (!feof($arqAntigo)) {
+        $linha = fgets($arqAntigo);
+        if ($linha != "") {
+            $dados = explode(";", $linha);
+            if ($dados[0] == $ID) {
+                $linha = $ID . ";" . $novaPergunta . "\n";
+            }
+            fwrite($arqNovo, $linha);
+        }
+    }
+    fclose($arqAntigo);
+    fclose($arqNovo);
 
-// ============================================================================
-// ETAPA 4: FINALIZAÇÃO
-// ============================================================================
-// 1. Imprime o status de sucesso para a função de retorno do JavaScript.
+    unlink("perguntas.txt");
+    rename("perguntas_temp.txt", "perguntas.txt");
+}
+
+if (file_exists("respostas.txt")) {
+    $arqAntigo = fopen("respostas.txt", "r");
+    $arqNovo = fopen("respostas_temp.txt", "w");
+
+    while (!feof($arqAntigo)) {
+        $linha = fgets($arqAntigo);
+        if ($linha != "") {
+            $dados = explode(";", $linha);
+            $IDPerguntaArquivo = $dados[0];
+            $IDRespostaArquivo = $dados[1];
+
+            if ($IDPerguntaArquivo == $ID) {
+                $nomeCampo = "resposta_" . $IDRespostaArquivo;
+                $novaRespTexto = $_GET[$nomeCampo];
+                $linha = $ID . ";" . $IDRespostaArquivo . ";" . $novaRespTexto . "\n";
+            }
+            fwrite($arqNovo, $linha);
+        }
+    }
+    fclose($arqAntigo);
+    fclose($arqNovo);
+
+    unlink("respostas.txt");
+    rename("respostas_temp.txt", "respostas.txt");
+}
+
+echo "<p>Deu bom!</p>";
 ?>

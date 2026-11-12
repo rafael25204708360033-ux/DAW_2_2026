@@ -1,39 +1,32 @@
 <?php
-// ============================================================================
-// ETAPA 1: RECEBIMENTO DOS PARÂMETROS
-// ============================================================================
-// 1. Capta os dados enviados pela requisição AJAX via parâmetro GET:
-//    - ID da pergunta ($_GET["ID"])
-//    - Enunciado da pergunta ($_GET["Pergunta"])
-//    - Resposta esperada ($_GET["Resposta"])
+$ID = $_GET["ID"];
+$pergunta = $_GET["Pergunta"];
+$respostaTexto = $_GET["Resposta"];
 
-// ============================================================================
-// ETAPA 2: GRAVAÇÃO DA PERGUNTA (perguntas.txt)
-// ============================================================================
-// 1. Verifica se o arquivo "perguntas.txt" existe.
-// 2. Se NÃO existir:
-//    - Abre em modo de escrita ("w").
-//    - Grava o cabeçalho padrão: "ID;Pergunta\n".
-//    - Fecha o arquivo.
-// 3. Abre "perguntas.txt" em modo append ("a") para adicionar no final.
-// 4. Monta a linha com o formato: $ID . ";" . $pergunta . "\n"
-// 5. Escreve a linha e fecha o arquivo.
+if (!file_exists("perguntas.txt")) {
+    $arqPerg = fopen("perguntas.txt", "w") or die("Erro ao criar arquivo");
+    $linha = "ID;Pergunta\n";
+    fwrite($arqPerg, $linha);
+    fclose($arqPerg);
+}
 
-// ============================================================================
-// ETAPA 3: GRAVAÇÃO DA RESPOSTA ÚNICA (respostas.txt)
-// ============================================================================
-// 1. Verifica se o arquivo "respostas.txt" existe.
-// 2. Se NÃO existir:
-//    - Abre em modo de escrita ("w").
-//    - Grava o cabeçalho padrão: "ID;IDResposta;Resposta\n".
-//    - Fecha o arquivo.
-// 3. Abre "respostas.txt" em modo append ("a").
-// 4. Define o IDResposta fixo como 1 (pois é uma pergunta de texto único).
-// 5. Monta a linha com o formato: $ID . ";1;" . $respostaTexto . "\n"
-// 6. Escreve a linha e fecha o arquivo.
+$arqPerg = fopen("perguntas.txt", "a") or die("Erro ao abrir arquivo");
+$linha = $ID . ";" . $pergunta . "\n";
+fwrite($arqPerg, $linha);
+fclose($arqPerg);
 
-// ============================================================================
-// ETAPA 4: RETORNO PARA O JAVASCRIPT
-// ============================================================================
-// 1. Imprime uma mensagem de confirmação em HTML para o XMLHttpRequest capturar.
+if (!file_exists("respostas.txt")) {
+    $arqResp = fopen("respostas.txt", "w") or die("Erro ao criar arquivo");
+    $linha = "ID;IDResposta;Resposta\n";
+    fwrite($arqResp, $linha);
+    fclose($arqResp);
+}
+
+$arqResp = fopen("respostas.txt", "a") or die("Erro ao abrir arquivo");
+$IDResposta = 1;
+$linha = $ID . ";" . $IDResposta . ";" . $respostaTexto . "\n";
+fwrite($arqResp, $linha);
+fclose($arqResp);
+
+echo "<p>Deu bom!</p>";
 ?>
