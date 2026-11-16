@@ -23,5 +23,5 @@ if ($result === true) {
 }
 
 $conn->close();
-echo $retorno ? "true" : "false";
+echo json_encode($retorno);
 ?>

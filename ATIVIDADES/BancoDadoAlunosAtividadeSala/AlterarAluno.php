@@ -23,5 +23,5 @@ if ($result === true && $conn->affected_rows > 0) {
 }
 
 $conn->close();
-echo $retorno ? "true" : "false";
+echo json_encode($retorno);
 ?>

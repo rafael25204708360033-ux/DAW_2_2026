@@ -18,7 +18,7 @@
             let xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    if (this.responseText == "true") {
+                    if (JSON.parse(this.responseText) == true) {
                         document.getElementById("msg").innerHTML = "Aluno inserido com sucesso!";
                         ListarAlunos();
                     } else {
@@ -45,7 +45,7 @@
             let xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    if (this.responseText == "true") {
+                    if (JSON.parse(this.responseText) == true) {
                         document.getElementById("msg").innerHTML = "Aluno alterado com sucesso!";
                         ListarAlunos();
                     } else {
@@ -73,7 +73,7 @@
             let xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    if (this.responseText == "true") {
+                    if (JSON.parse(this.responseText) == true) {
                         document.getElementById("msg").innerHTML = "Aluno excluído com sucesso!";
                         ListarAlunos();
                     } else {
@@ -89,7 +89,17 @@
             let xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("lista").innerHTML = this.responseText;
+                    let dados = JSON.parse(this.responseText);
+                    if (dados.length > 0) {
+                        let html = "<h2>Lista de Alunos</h2><table border='1'><tr><th>Matrícula</th><th>Nome</th><th>Email</th></tr>";
+                        for (let i = 0; i < dados.length; i++) {
+                            html += "<tr><td>" + dados[i].matricula + "</td><td>" + dados[i].nome + "</td><td>" + dados[i].email + "</td></tr>";
+                        }
+                        html += "</table>";
+                        document.getElementById("lista").innerHTML = html;
+                    } else {
+                        document.getElementById("lista").innerHTML = "<p>Nenhum aluno cadastrado no banco.</p>";
+                    }
                 }
             }
             xmlhttp.open("GET", "ListarAlunos.php", true);
