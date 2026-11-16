@@ -31,6 +31,34 @@
             xmlhttp.send();
         }
 
+        function BuscarAluno() {
+    let matricula = document.getElementById("matricula").value;
+
+    if (matricula == "") {
+        document.getElementById("msg").innerHTML = "Informe a matrícula para buscar.";
+        return false;
+    }
+
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let aluno = JSON.parse(this.responseText);
+            if (aluno != null) {
+                document.getElementById("nome").value = aluno.nome;
+                document.getElementById("email").value = aluno.email;
+                document.getElementById("msg").innerHTML = "Aluno encontrado!";
+            } else {
+                document.getElementById("nome").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("msg").innerHTML = "Aluno não encontrado!";
+            }
+        }
+    }
+    xmlhttp.open("GET", "BuscarAluno.php?matricula=" + encodeURIComponent(matricula), true);
+    xmlhttp.send();
+}
+
+
         function AlterarAluno() {
             let matricula = document.getElementById("matricula").value;
             let nome = document.getElementById("nome").value;
