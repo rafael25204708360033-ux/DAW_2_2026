@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Disciplinas</title>
+    <script>
+        function EnviarDisc() {
+            let nome = document.getElementById("nome").value;
+            let sigla = document.getElementById("sigla").value;
+            let cg = document.getElementById("cg").value;
+
+            let erro = ValidaForm(nome, sigla, cg);
+            if (erro != "") {
+                document.getElementById("msg").innerHTML = erro;
+                return false;
+            }
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (JSON.parse(this.responseText) == true) {
+                        document.getElementById("msg").innerHTML = "Discliplina inserido com sucesso!";
+                        ListarDisc();
+                    } else {
+                        document.getElementById("msg").innerHTML = "Erro ao inserir disciplina!";
+                    }
+                }
+            }
+            xmlhttp.open("GET", "IncluirDisc.php?nome=" + encodeURIComponent(nome) + 
+                            "&sigla=" + encodeURIComponent(sigla) + "&cg=" + encodeURIComponent(cg), true);
+            xmlhttp.send();
+        }
+
+        function BuscarDisc() {
+    let nome = document.getElementById("nome").value;
+
+    if (nome == "") {
+        document.getElementById("msg").innerHTML = "Informe o nome da Disciplina para buscar.";
+        return false;
+    }
+
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let disc = JSON.parse(this.responseText);
+            if (disc != null) {
+                document.getElementById("sigla").value = disc.sigla;
+                document.getElementById("cg").value = disc.cg;
+                document.getElementById("msg").innerHTML = "Disciplina encontrado!";
+            } else {
+                document.getElementById("sigla").value = "";
+                document.getElementById("cg").value = "";
+                document.getElementById("msg").innerHTML = "Disciplina não encontrado!";
+            }
+        }
+    }
+    xmlhttp.open("GET", "BuscarDisc.php?nome=" + encodeURIComponent(nome), true);
+    xmlhttp.send();
+}
+
+
+        function AlterarDisc() {
+            let nome = document.getElementById("nome").value;
+            let sigla = document.getElementById("sigla").value;
+            let cg = document.getElementById("cg").value;
+
+            let erro = ValidaForm(nome, sigla, cg);
+            if (erro != "") {
+                document.getElementById("msg").innerHTML = erro;
+                return false;
+            }
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (JSON.parse(this.responseText) == true) {
+                        document.getElementById("msg").innerHTML = "Disciplina alterado com sucesso!";
+                        ListarDisc();
+                    } else {
+                        document.getElementById("msg").innerHTML = "Erro ao alterar Disciplina!";
+                    }
+                }
+            }
+            xmlhttp.open("GET", "AlterarDisc.php?nome=" + encodeURIComponent(nome) + 
+                            "&sigla=" + encodeURIComponent(sigla) + "&cg=" + encodeURIComponent(cg), true);
+            xmlhttp.send();
+        }
+
+        function ExcluirDisc() {
+            let nome = document.getElementById("nome").value;
+
+            if (nome == "") {
+                document.getElementById("msg").innerHTML = "Informe o Nome da Disciplina para excluir.";
+                return false;
+            }
+
+            if (!confirm("Tem certeza que deseja excluir a Discipina  " + nome + "?")) {
+                return false;
+            }
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (JSON.parse(this.responseText) == true) {
+                        document.getElementById("msg").innerHTML = "Disciplina excluído com sucesso!";
+                        ListarDisc();
+                    } else {
+                        document.getElementById("msg").innerHTML = "Erro ao excluir Disciplina!";
+                    }
+                }
+            }
+            xmlhttp.open("GET", "ExcluirDisc.php?nome=" + encodeURIComponent(nome), true);
+            xmlhttp.send();
+        }
+
+        function ListarDisc() {
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let dados = JSON.parse(this.responseText);
+                    if (dados.length > 0) {
+                        let html = "<h2>Lista de Disciplinas</h2><table border='1'><tr><th>Nome</th><th>Sigla</th><th>Carga Horária</th></tr>";
+                        for (let i = 0; i < dados.length; i++) {
+                            html += "<tr><td>" + dados[i].nome + "</td><td>" + dados[i].sigla + "</td><td>" + dados[i].cg + "</td></tr>";
+                        }
+                        html += "</table>";
+                        document.getElementById("lista").innerHTML = html;
+                    } else {
+                        document.getElementById("lista").innerHTML = "<p>Nenhuma Disciplina cadastrada no banco.</p>";
+                    }
+                }
+            }
+            xmlhttp.open("GET", "ListarDosc.php", true);
+            xmlhttp.send();
+        }
+
+        function ValidaForm(pnome, psigla, pcg) {
+            let msg = "";
+            if (pnome == "") msg += "Nome não preenchida.<br>";
+            if (psigla == "") msg += "Sigla não preenchida.<br>";
+            if (pcg == "") msg += "Carga Horária não preenchida.<br>";
+            return msg;
+        }
+    </script>
+</head>
+<body>
+    <h1>Gerenciar Disciplinas</h1>
+    <br>
+    <form action="" method="POST" name="formDisciplinas" id="formDisciplinas">
+        Nome: <input type="text" name="nome" id="nome" required> <br><br>
+        Sigla: <input type="text" name="sigla" id="sigla"> <br><br>
+        Carga Horária: <input type="text" name="cg" id="cg"> <br><br>
+        <br>
+        <input type="button" value="Inserir" onclick="EnviarDisc();">
+<input type="button" value="Buscar" onclick="BuscarDisc();">
+<input type="button" value="Alterar" onclick="AlterarDisc();">
+<input type="button" value="Deletar" onclick="ExcluirDisc();">
+<input type="button" value="Listar" onclick="ListarDisc();">
+
+    </form>
+
+    <p id="msg"></p>
+    <hr>
+    <div id="lista"></div>
+</body>
+</html>
